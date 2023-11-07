@@ -3,7 +3,9 @@ import { CarType } from "@/app/page"
 import { notFound } from "next/navigation"
 
 const fetchCarById = async (id: string): Promise<CarType> => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL_API}/car/${id}`)
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL_API}/car/${id}`, {
+    next: { revalidate: 0 },
+  })
   if (!res.ok) {
     notFound()
   }
