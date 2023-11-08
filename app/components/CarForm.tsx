@@ -71,6 +71,7 @@ export default function CarForm({ car, mode }: { car?: CarType; mode: "edit" | "
       {error && <Alert severity="error">{error}</Alert>}
 
       <TextField
+        id="marca"
         label="Marca"
         value={marca}
         onChange={(event: ChangeEvent<HTMLInputElement>) => {
@@ -80,6 +81,7 @@ export default function CarForm({ car, mode }: { car?: CarType; mode: "edit" | "
       />
 
       <TextField
+        id="modelo"
         label="Modelo"
         value={modelo}
         onChange={(event: ChangeEvent<HTMLInputElement>) => {
@@ -88,6 +90,7 @@ export default function CarForm({ car, mode }: { car?: CarType; mode: "edit" | "
         error={error?.includes("modelo")}
       />
       <TextField
+        id="year"
         label="Año"
         value={year}
         onChange={(event: ChangeEvent<HTMLInputElement>) => {
@@ -96,6 +99,7 @@ export default function CarForm({ car, mode }: { car?: CarType; mode: "edit" | "
         error={error?.includes("year")}
       />
       <TextField
+        id="km"
         label="Km"
         value={km}
         onChange={(event: ChangeEvent<HTMLInputElement>) => {
@@ -104,6 +108,7 @@ export default function CarForm({ car, mode }: { car?: CarType; mode: "edit" | "
         error={error?.includes("km")}
       />
       <TextField
+        id="color"
         label="Color"
         value={color}
         onChange={(event: ChangeEvent<HTMLInputElement>) => {
@@ -120,6 +125,7 @@ export default function CarForm({ car, mode }: { car?: CarType; mode: "edit" | "
             sx={{ color: "black" }}
             control={
               <Checkbox
+                id="ac"
                 checked={ac}
                 onChange={() => {
                   setAc((prev) => !prev)
@@ -132,6 +138,7 @@ export default function CarForm({ car, mode }: { car?: CarType; mode: "edit" | "
 
         <Grid item xs={4}>
           <TextField
+            id="pasajeros"
             type="number"
             label="Pasajeros"
             value={pasajeros}
@@ -144,9 +151,10 @@ export default function CarForm({ car, mode }: { car?: CarType; mode: "edit" | "
 
         <Grid item xs={4}>
           <FormControl>
-            <InputLabel id="cambios">Cambios</InputLabel>
+            <InputLabel id="cambios-label">Cambios</InputLabel>
             <Select
-              labelId="cambios"
+              id="cambios"
+              labelId="cambios-label"
               label="Cambios"
               value={cambios}
               onChange={(event: SelectChangeEvent<"MANUAL" | "AUTOMATICO">) => {
