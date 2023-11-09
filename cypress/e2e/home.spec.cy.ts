@@ -71,6 +71,7 @@ describe("Add-car", () => {
     cy.intercept("POST", "https://car-rental-api-dcat.onrender.com/api/car", (req) => {
       console.log(req.body)
       expect(req.body).to.deep.equal(formData)
+      req.reply(formData)
     }).as("postRequest")
 
     cy.get('button[type="submit"]').click()
