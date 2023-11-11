@@ -12,32 +12,35 @@ import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { ClientType } from "../clients/page"
 
 const rowHead = [
-  "marca",
-  "modelo",
-  "año",
-  "km",
-  "color",
-  "AC",
-  "pasajeros",
-  "cambios",
+  "nombre",
+  "apellido",
+  "Tipo Doc",
+  "Nro Doc",
+  "Nacionalidad",
+  "Direccion",
+  "Telefono",
+  "email",
+  "Nacimiento",
   "edit",
   "delete",
 ]
 
-export default function CarsTable({ cars }: { cars: CarType[] }) {
+export default function ClientsTable({ clients }: { clients: ClientType[] }) {
   const [isLoadingItemWithId, setIsLoadingItemWithId] = useState<number | null>(null)
   const router = useRouter()
 
   const handleEditClick = (id: number) => {
-    router.push("/edit-car/" + id)
+    // router.push("/edit-client/" + id)
+    // TODO PAGE /edit-client
   }
 
   const handleDeleteClick = async (id: number) => {
     setIsLoadingItemWithId(id)
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL_API}/car/` + id, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL_API}/clients/` + id, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -56,7 +59,7 @@ export default function CarsTable({ cars }: { cars: CarType[] }) {
   }
 
   return (
-    <TableContainer component={Paper} sx={{ width: 1000, marginInline: "auto" }}>
+    <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="caption table">
         <TableHead>
           <TableRow sx={{ backgroundColor: "lightgoldenrodyellow", fontVariantCaps: "small-caps" }}>
@@ -66,39 +69,42 @@ export default function CarsTable({ cars }: { cars: CarType[] }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {cars.length === 0 ? (
+          {clients.length === 0 ? (
             <TableRow>
               <TableCell align="center" colSpan={10} sx={{ fontSize: "20px" }}>
-                No cars added
+                No Clients Added
               </TableCell>
             </TableRow>
           ) : (
-            cars.map((car) => (
-              <TableRow key={car.id}>
-                <TableCell>{car.marca}</TableCell>
-                <TableCell>{car.modelo}</TableCell>
-                <TableCell>{car.year}</TableCell>
-                <TableCell>{car.km}</TableCell>
-                <TableCell>{car.color}</TableCell>
-                <TableCell align="center">{car.ac ? "si" : "no"}</TableCell>
-                <TableCell align="center">{car.pasajeros}</TableCell>
-                <TableCell>{car.cambios}</TableCell>
+            clients.map((client) => (
+              <TableRow key={client.id}>
+                <TableCell>{client.nombre}</TableCell>
+                <TableCell>{client.apellido}</TableCell>
+                <TableCell>{client.tipo_documento}</TableCell>
+                <TableCell>{client.nro_documento}</TableCell>
+                <TableCell>{client.nacionalidad}</TableCell>
+                <TableCell>{client.direccion}</TableCell>
+                <TableCell>{client.telefono}</TableCell>
+                <TableCell>{client.email}</TableCell>
+                <TableCell>
+                  {new Date(client.fecha_nacimiento).toLocaleDateString("en-GB")}
+                </TableCell>
                 <TableCell>
                   <EditIcon
                     className="actionIcon"
                     onClick={() => {
-                      handleEditClick(car.id)
+                      handleEditClick(client.id)
                     }}
                   />
                 </TableCell>
                 <TableCell>
-                  {isLoadingItemWithId === car.id ? (
+                  {isLoadingItemWithId === client.id ? (
                     "loading..."
                   ) : (
                     <DeleteIcon
                       className="actionIcon"
                       onClick={() => {
-                        handleDeleteClick(car.id)
+                        handleDeleteClick(client.id)
                       }}
                     />
                   )}

@@ -2,9 +2,11 @@ describe("Home", () => {
   it("Render title and links correctly", () => {
     cy.visit("http://localhost:3000/")
     cy.contains("Car Rental Admin Panel")
-    cy.contains("Home")
+    cy.contains("Cars")
     cy.get("nav a:first-child").should("have.class", "active")
-    cy.contains(/Add a new car/i)
+    cy.contains(/Add new car/i)
+    cy.contains(/Clients/i)
+    cy.contains(/Add new client/i)
   })
 })
 
@@ -12,16 +14,16 @@ describe("Navbar", () => {
   it("should navigate to correct path when click on links and assign active class", () => {
     cy.visit("http://localhost:3000/")
     cy.contains("Car Rental Admin Panel")
-    cy.get("a").contains("Add a new car").click()
-    cy.get("a").contains("Add a new car").should("have.class", "active")
-    cy.get("a").contains("Home").should("not.have.class", "active")
+    cy.get("a").contains("Add new car").click()
+    cy.get("a").contains("Add new car").should("have.class", "active")
+    cy.get("a").contains("Cars").should("not.have.class", "active")
     cy.location("pathname").should("equal", "/add-car")
 
     cy.visit("http://localhost:3000/add-car")
     cy.contains("Car Rental Admin Panel")
-    cy.get("a").contains("Home").click()
-    cy.get("a").contains("Home").should("have.class", "active")
-    cy.get("a").contains("Add a new car").should("not.have.class", "active")
+    cy.get("a").contains("Cars").click()
+    cy.get("a").contains("Cars").should("have.class", "active")
+    cy.get("a").contains("Add new car").should("not.have.class", "active")
     cy.location("pathname").should("equal", "/")
   })
 })
@@ -68,8 +70,7 @@ describe("Add-car", () => {
     cy.get('input[id="color"]').type(formData.color)
     cy.get('input[id="pasajeros"]').clear().click().type(formData.pasajeros.toString())
 
-    cy.intercept("POST", "https://car-rental-api-dcat.onrender.com/api/car", (req) => {
-      console.log(req.body)
+    cy.intercept("POST", "*", (req) => {
       expect(req.body).to.deep.equal(formData)
       req.reply(formData)
     }).as("postRequest")
