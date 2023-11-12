@@ -7,7 +7,6 @@ import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import Paper from "@mui/material/Paper"
-import { CarType } from "../page"
 import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
 import { useRouter } from "next/navigation"
@@ -33,8 +32,7 @@ export default function ClientsTable({ clients }: { clients: ClientType[] }) {
   const router = useRouter()
 
   const handleEditClick = (id: number) => {
-    // router.push("/edit-client/" + id)
-    // TODO PAGE /edit-client
+    router.push("/edit-client/" + id)
   }
 
   const handleDeleteClick = async (id: number) => {

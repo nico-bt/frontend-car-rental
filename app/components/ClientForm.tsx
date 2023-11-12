@@ -207,7 +207,12 @@ export default function ClientForm({
       >
         {isLoading ? "Loading..." : mode === "edit" ? "Edit" : "Add"}
       </Button>
-      <Button type="button" variant="outlined" color="primary" onClick={() => router.push("/")}>
+      <Button
+        type="button"
+        variant="outlined"
+        color="primary"
+        onClick={() => router.push("/clients")}
+      >
         Cancel
       </Button>
     </Box>
