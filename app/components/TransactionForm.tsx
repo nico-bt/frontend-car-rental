@@ -2,11 +2,12 @@
 import { FormEvent, useState } from "react"
 import { useRouter } from "next/navigation"
 import Box from "@mui/material/Box"
-import { Alert, Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material"
+import { Alert, Button, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material"
 import DatePickerValue from "./DatePcker"
 import dayjs, { Dayjs } from "dayjs"
 import { ClientType } from "../clients/page"
 import { CarType } from "../page"
+import { TransactionType } from "../transactions/page"
 
 export default function TransactionForm({
   cars,
@@ -17,15 +18,23 @@ export default function TransactionForm({
   cars: CarType[]
   clients: ClientType[]
   mode: "edit" | "add"
-  transaction?: any
+  transaction?: TransactionType
 }) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<any>(null)
 
-  const [carToRent, setCarToRent] = useState(cars[0]?.id)
-  const [clientToRent, setClientToRent] = useState(clients[0]?.id)
-  const [startDate, setStartDate] = useState<Dayjs | null>(null)
-  const [finishtDate, setFinishDate] = useState<Dayjs | null>(null)
+  const [carToRent, setCarToRent] = useState(mode === "edit" ? transaction?.carId : cars[0]?.id)
+
+  const [clientToRent, setClientToRent] = useState(
+    mode === "edit" ? transaction?.clientId : clients[0]?.id
+  )
+
+  const [startDate, setStartDate] = useState<Dayjs | null>(
+    mode === "edit" ? dayjs(transaction?.start_date) : null
+  )
+  const [finishtDate, setFinishDate] = useState<Dayjs | null>(
+    mode === "edit" ? dayjs(transaction?.finish_date) : null
+  )
 
   const daysOfRent = finishtDate?.diff(startDate, "day")
   const priceSelectedCar = cars.find((car) => car.id === carToRent)?.price
@@ -53,7 +62,7 @@ export default function TransactionForm({
           mode === "edit" ? transaction?.id : ""
         }`,
         {
-          method: mode === "add" ? "POST" : "PATCH",
+          method: mode === "add" ? "POST" : "PUT",
           body: JSON.stringify(newTransaction),
           headers: { "Content-Type": "application/json" },
         }
@@ -140,9 +149,14 @@ export default function TransactionForm({
         color={mode === "add" ? "success" : "primary"}
         disabled={isLoading}
       >
-        {isLoading ? "Loading..." : mode === "edit" ? "Edit" : "Add"}
+        {isLoading ? "Loading..." : mode === "edit" ? "Edit Transaction" : "Add"}
       </Button>
-      <Button type="button" variant="outlined" color="primary" onClick={() => router.push("/")}>
+      <Button
+        type="button"
+        variant="outlined"
+        color="primary"
+        onClick={() => router.push("/transactions")}
+      >
         Cancel
       </Button>
 

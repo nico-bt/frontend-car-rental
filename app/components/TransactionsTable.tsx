@@ -7,9 +7,8 @@ import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import Paper from "@mui/material/Paper"
-import { CarType } from "../page"
+import DoneIcon from "@mui/icons-material/Done"
 import EditIcon from "@mui/icons-material/Edit"
-import DeleteIcon from "@mui/icons-material/Delete"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { TransactionType } from "../transactions/page"
@@ -23,7 +22,7 @@ const rowHead = [
   "fecha inicio",
   "fecha fin",
   "edit",
-  "delete",
+  "done",
 ]
 
 export default function TransactionsTable({ transactions }: { transactions: TransactionType[] }) {
@@ -31,7 +30,7 @@ export default function TransactionsTable({ transactions }: { transactions: Tran
   const router = useRouter()
 
   const handleEditClick = (id: number) => {
-    // router.push("/edit-car/" + id)
+    router.push("/edit-transaction/" + id)
   }
 
   const handleDeleteClick = async (id: number) => {
@@ -81,7 +80,7 @@ export default function TransactionsTable({ transactions }: { transactions: Tran
                   {transaction.client.nombre + " " + transaction.client.apellido}
                 </TableCell>
                 <TableCell>{transaction.client.nro_documento}</TableCell>
-                <TableCell>{transaction.car.price}</TableCell>
+                <TableCell align="center">{transaction.car.price}</TableCell>
                 <TableCell>
                   {new Date(transaction.start_date).toLocaleDateString("en-GB")}
                 </TableCell>
@@ -101,7 +100,7 @@ export default function TransactionsTable({ transactions }: { transactions: Tran
                   {isLoadingItemWithId === transaction.id ? (
                     "loading..."
                   ) : (
-                    <DeleteIcon
+                    <DoneIcon
                       className="actionIcon"
                       onClick={() => {
                         handleDeleteClick(transaction.id)
