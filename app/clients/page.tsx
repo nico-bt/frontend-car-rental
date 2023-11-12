@@ -4,7 +4,7 @@ export interface ClientType {
   id: number
   nombre: string
   apellido: string
-  tipo_documento: "DNI" | "PASAPORTE" | "CEDULA"
+  tipo_documento: Documentotype
   nro_documento: string
   nacionalidad: string
   direccion: string
@@ -13,9 +13,16 @@ export interface ClientType {
   fecha_nacimiento: string
   created_at: string
   updated_at: string
+  is_renting: boolean
 }
 
-const fetchClients = async (url: string): Promise<ClientType[]> => {
+export enum Documentotype {
+  PASAPORTE = "PASAPORTE",
+  DNI = "DNI",
+  CEDULA = "CEDULA",
+}
+
+export const fetchClients = async (url: string): Promise<ClientType[]> => {
   const res = await fetch(url, { next: { revalidate: 0 } })
   const clients = await res.json()
 

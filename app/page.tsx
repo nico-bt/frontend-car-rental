@@ -12,9 +12,11 @@ export interface CarType {
   cambios: "MANUAL" | "AUTOMATICO"
   created_at: string
   updated_at: string
+  price: number
+  is_rented: boolean
 }
 
-const fetchCars = async (url: string): Promise<CarType[]> => {
+export const fetchCars = async (url: string): Promise<CarType[]> => {
   const res = await fetch(url, { next: { revalidate: 0 } })
   const cars = await res.json()
 

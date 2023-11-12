@@ -12,49 +12,47 @@ import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { TransactionType } from "../transactions/page"
 
 const rowHead = [
-  "estado",
   "marca",
   "modelo",
-  "año",
+  "cliente",
+  "documento",
   "precio/dia",
-  "km",
-  "color",
-  "AC",
-  "pasajeros",
-  "cambios",
+  "fecha inicio",
+  "fecha fin",
   "edit",
   "delete",
 ]
 
-export default function CarsTable({ cars }: { cars: CarType[] }) {
+export default function TransactionsTable({ transactions }: { transactions: TransactionType[] }) {
   const [isLoadingItemWithId, setIsLoadingItemWithId] = useState<number | null>(null)
   const router = useRouter()
 
   const handleEditClick = (id: number) => {
-    router.push("/edit-car/" + id)
+    // router.push("/edit-car/" + id)
   }
 
   const handleDeleteClick = async (id: number) => {
-    setIsLoadingItemWithId(id)
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL_API}/car/` + id, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      if (response.ok) {
-        setIsLoadingItemWithId(null)
-        router.refresh()
-      } else {
-        throw new Error()
-      }
-    } catch (error) {
-      console.log(error)
-      setIsLoadingItemWithId(null)
-    }
+    // setIsLoadingItemWithId(id)
+    // try {
+    //   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL_API}/car/` + id, {
+    //     method: "DELETE",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   })
+    //   if (response.ok) {
+    //     setIsLoadingItemWithId(null)
+    //     router.refresh()
+    //   } else {
+    //     throw new Error()
+    //   }
+    // } catch (error) {
+    //   console.log(error)
+    //   setIsLoadingItemWithId(null)
+    // }
   }
 
   return (
@@ -68,43 +66,45 @@ export default function CarsTable({ cars }: { cars: CarType[] }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {cars.length === 0 ? (
+          {transactions.length === 0 ? (
             <TableRow>
               <TableCell align="center" colSpan={10} sx={{ fontSize: "20px" }}>
-                No cars added
+                No transactions active
               </TableCell>
             </TableRow>
           ) : (
-            cars.map((car) => (
-              <TableRow key={car.id} style={car.is_rented ? { backgroundColor: "gainsboro" } : {}}>
-                <TableCell sx={{ fontSize: 12 }}>
-                  {car.is_rented ? "Alquilado" : "Disponible"}
+            transactions.map((transaction) => (
+              <TableRow key={transaction.id}>
+                <TableCell>{transaction.car.marca}</TableCell>
+                <TableCell>{transaction.car.modelo}</TableCell>
+                <TableCell>
+                  {transaction.client.nombre + " " + transaction.client.apellido}
                 </TableCell>
-                <TableCell>{car.marca}</TableCell>
-                <TableCell>{car.modelo}</TableCell>
-                <TableCell>{car.year}</TableCell>
-                <TableCell align="center">{car.price}</TableCell>
-                <TableCell>{car.km}</TableCell>
-                <TableCell>{car.color}</TableCell>
-                <TableCell align="center">{car.ac ? "si" : "no"}</TableCell>
-                <TableCell align="center">{car.pasajeros}</TableCell>
-                <TableCell>{car.cambios}</TableCell>
+                <TableCell>{transaction.client.nro_documento}</TableCell>
+                <TableCell>{transaction.car.price}</TableCell>
+                <TableCell>
+                  {new Date(transaction.start_date).toLocaleDateString("en-GB")}
+                </TableCell>
+                <TableCell>
+                  {new Date(transaction.finish_date).toLocaleDateString("en-GB")}
+                </TableCell>
+
                 <TableCell align="center">
                   <EditIcon
                     className="actionIcon"
                     onClick={() => {
-                      handleEditClick(car.id)
+                      handleEditClick(transaction.id)
                     }}
                   />
                 </TableCell>
                 <TableCell align="center">
-                  {isLoadingItemWithId === car.id ? (
+                  {isLoadingItemWithId === transaction.id ? (
                     "loading..."
                   ) : (
                     <DeleteIcon
                       className="actionIcon"
                       onClick={() => {
-                        handleDeleteClick(car.id)
+                        handleDeleteClick(transaction.id)
                       }}
                     />
                   )}

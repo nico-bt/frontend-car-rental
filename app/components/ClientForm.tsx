@@ -15,15 +15,22 @@ import {
 } from "@mui/material"
 import DatePickerValue from "./DatePcker"
 import dayjs, { Dayjs } from "dayjs"
+import { ClientType, Documentotype } from "../clients/page"
 
-export default function ClientForm({ client, mode }: { client?: any; mode: "edit" | "add" }) {
+export default function ClientForm({
+  client,
+  mode,
+}: {
+  client?: ClientType
+  mode: "edit" | "add"
+}) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<any>(null)
 
   const [nombre, setNombre] = useState(mode === "edit" ? client?.nombre : "")
   const [apellido, setApellido] = useState(mode === "edit" ? client?.apellido : "")
-  const [tipoDocumento, setTipoDocumento] = useState(
-    mode === "edit" ? client?.tipo_documento : "DNI"
+  const [tipoDocumento, setTipoDocumento] = useState<Documentotype>(
+    mode === "edit" ? client?.tipo_documento! : Documentotype.PASAPORTE
   )
   const [nroDocumento, setNroDocumento] = useState(mode === "edit" ? client?.nro_documento : "")
   const [nacionalidad, setNacionalidad] = useState(mode === "edit" ? client?.nacionalidad : "")
@@ -31,7 +38,7 @@ export default function ClientForm({ client, mode }: { client?: any; mode: "edit
   const [telefono, setTelefono] = useState(mode === "edit" ? client?.telefono : "")
   const [email, setEmail] = useState(mode === "edit" ? client?.email : "")
   const [fechaNacimiento, setFechaNacimiento] = useState<Dayjs | null>(
-    mode === "edit" ? client?.fecha_nacimiento : dayjs("2022-04-17")
+    mode === "edit" ? dayjs(client?.fecha_nacimiento) : dayjs("2000-04-17")
   )
 
   const router = useRouter()
@@ -115,13 +122,14 @@ export default function ClientForm({ client, mode }: { client?: any; mode: "edit
               labelId="tipoDocumento-label"
               label="Tipo de Documento"
               value={tipoDocumento}
-              onChange={(event: SelectChangeEvent<"DNI" | "PASAPORTE">) => {
-                setTipoDocumento(event.target.value as "DNI" | "PASAPORTE")
+              onChange={(event: SelectChangeEvent<Documentotype>) => {
+                setTipoDocumento(event.target.value as Documentotype)
               }}
               inputProps={{ "aria-label": "Without label" }}
             >
-              <MenuItem value={"DNI"}>DNI</MenuItem>
-              <MenuItem value={"PASAPORTE"}>Pasaporte</MenuItem>
+              <MenuItem value={Documentotype.DNI}>DNI</MenuItem>
+              <MenuItem value={Documentotype.PASAPORTE}>Pasaporte</MenuItem>
+              <MenuItem value={Documentotype.CEDULA}>Cedula</MenuItem>
             </Select>
           </FormControl>
         </Grid>
@@ -184,7 +192,12 @@ export default function ClientForm({ client, mode }: { client?: any; mode: "edit
         </Grid>
       </Grid>
 
-      <DatePickerValue setFechaNacimiento={setFechaNacimiento} fechaNacimiento={fechaNacimiento} />
+      <DatePickerValue
+        label="Fecha Nacimiento"
+        setFecha={setFechaNacimiento}
+        fecha={fechaNacimiento}
+        disableFuture
+      />
 
       <Button
         type="submit"

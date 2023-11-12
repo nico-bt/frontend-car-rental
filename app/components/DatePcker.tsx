@@ -6,19 +6,26 @@ import "dayjs/locale/en-gb"
 import { Dispatch, SetStateAction } from "react"
 
 export default function DatePickerValue({
-  setFechaNacimiento,
-  fechaNacimiento,
+  label,
+  disableFuture,
+  disablePast,
+  setFecha,
+  fecha,
 }: {
-  setFechaNacimiento: Dispatch<SetStateAction<dayjs.Dayjs | null>>
-  fechaNacimiento: Dayjs | null
+  label: string
+  disableFuture?: boolean
+  disablePast?: boolean
+  setFecha: Dispatch<SetStateAction<dayjs.Dayjs | null>>
+  fecha: Dayjs | null
 }) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
       <DatePicker
-        disableFuture
-        label="Fecha Nacimiento"
-        value={fechaNacimiento}
-        onChange={(newValue) => setFechaNacimiento(newValue)}
+        disableFuture={disableFuture}
+        disablePast={disablePast}
+        label={label}
+        value={fecha}
+        onChange={(newValue) => setFecha(newValue)}
       />
     </LocalizationProvider>
   )
