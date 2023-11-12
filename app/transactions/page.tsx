@@ -15,7 +15,7 @@ export interface TransactionType {
   car: CarType
 }
 
-export const fetchTransactions = async (url: string): Promise<TransactionType[]> => {
+const fetchTransactions = async (url: string): Promise<TransactionType[]> => {
   const res = await fetch(url, { next: { revalidate: 0 } })
   const transactions = await res.json()
 
