@@ -79,7 +79,7 @@ export default function ClientsTable({ clients }: { clients: ClientType[] }) {
             clients.map((client) => (
               <TableRow
                 key={client.id}
-                style={client.is_renting ? { backgroundColor: "#fbf5f3" } : {}}
+                style={client.is_renting ? { backgroundColor: "lightgray" } : {}}
               >
                 <TableCell align="center">
                   {client.is_renting ? <CarRentalIcon /> : " - "}
