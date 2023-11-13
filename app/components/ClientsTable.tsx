@@ -9,11 +9,13 @@ import TableRow from "@mui/material/TableRow"
 import Paper from "@mui/material/Paper"
 import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
+import CarRentalIcon from "@mui/icons-material/CarRental"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { ClientType } from "../clients/page"
 
 const rowHead = [
+  "alquilando",
   "nombre",
   "apellido",
   "Tipo Doc",
@@ -75,7 +77,13 @@ export default function ClientsTable({ clients }: { clients: ClientType[] }) {
             </TableRow>
           ) : (
             clients.map((client) => (
-              <TableRow key={client.id}>
+              <TableRow
+                key={client.id}
+                style={client.is_renting ? { backgroundColor: "#fbf5f3" } : {}}
+              >
+                <TableCell align="center">
+                  {client.is_renting ? <CarRentalIcon /> : " - "}
+                </TableCell>
                 <TableCell>{client.nombre}</TableCell>
                 <TableCell>{client.apellido}</TableCell>
                 <TableCell>{client.tipo_documento}</TableCell>

@@ -76,7 +76,7 @@ export default function CarsTable({ cars }: { cars: CarType[] }) {
             </TableRow>
           ) : (
             cars.map((car) => (
-              <TableRow key={car.id} style={car.is_rented ? { backgroundColor: "gainsboro" } : {}}>
+              <TableRow key={car.id} style={car.is_rented ? { backgroundColor: "#fbf5f3" } : {}}>
                 <TableCell sx={{ fontSize: 12 }}>
                   {car.is_rented ? "Alquilado" : "Disponible"}
                 </TableCell>
