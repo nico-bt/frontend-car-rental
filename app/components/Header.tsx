@@ -29,13 +29,18 @@ function Header() {
         <SeparatorBar />
 
         <Link href={"/transactions"} className={currentRoute === "/transactions" ? "active" : ""}>
-          Transactions
+          Active Transactions
         </Link>
         <Link
           href={"/add-transaction"}
           className={currentRoute === "/add-transaction" ? "active" : ""}
         >
           Add transaction
+        </Link>
+        <SeparatorBar />
+
+        <Link href={"/historial"} className={currentRoute === "/historial" ? "active" : ""}>
+          Historial
         </Link>
       </nav>
     </header>

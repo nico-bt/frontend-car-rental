@@ -1,4 +1,5 @@
 import { ClientType } from "../clients/page"
+import HistorialTable from "../components/HistorialTable"
 import TransactionsTable from "../components/TransactionsTable"
 import { CarType } from "../page"
 
@@ -22,9 +23,9 @@ const fetchTransactions = async (url: string): Promise<TransactionType[]> => {
   return transactions
 }
 
-export default async function TransactionsPage() {
+export default async function HistorialPage() {
   const transactions = await fetchTransactions(
-    `${process.env.NEXT_PUBLIC_BASE_URL_API}/transactions?active=true`
+    `${process.env.NEXT_PUBLIC_BASE_URL_API}/transactions`
   )
-  return <TransactionsTable transactions={transactions} />
+  return <HistorialTable transactions={transactions} />
 }

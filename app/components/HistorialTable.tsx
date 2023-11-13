@@ -7,10 +7,6 @@ import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import Paper from "@mui/material/Paper"
-import DoneIcon from "@mui/icons-material/Done"
-import EditIcon from "@mui/icons-material/Edit"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
 import { TransactionType } from "../transactions/page"
 
 const rowHead = [
@@ -21,41 +17,11 @@ const rowHead = [
   "precio/dia",
   "fecha inicio",
   "fecha fin",
-  "edit",
-  "done",
 ]
 
-export default function TransactionsTable({ transactions }: { transactions: TransactionType[] }) {
-  const [isLoadingItemWithId, setIsLoadingItemWithId] = useState<number | null>(null)
-  const router = useRouter()
-
-  const handleEditClick = (id: number) => {
-    router.push("/edit-transaction/" + id)
-  }
-
-  const handleFinishTransaction = async (id: number) => {
-    setIsLoadingItemWithId(id)
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL_API}/transactions/` + id, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      if (response.ok) {
-        setIsLoadingItemWithId(null)
-        router.refresh()
-      } else {
-        throw new Error()
-      }
-    } catch (error) {
-      console.log(error)
-      setIsLoadingItemWithId(null)
-    }
-  }
-
+export default function HistorialTable({ transactions }: { transactions: TransactionType[] }) {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ width: 1150, margin: "0 auto" }}>
       <Table sx={{ minWidth: 650 }} aria-label="caption table">
         <TableHead>
           <TableRow sx={{ backgroundColor: "lightgoldenrodyellow", fontVariantCaps: "small-caps" }}>
@@ -86,27 +52,6 @@ export default function TransactionsTable({ transactions }: { transactions: Tran
                 </TableCell>
                 <TableCell>
                   {new Date(transaction.finish_date).toLocaleDateString("en-GB")}
-                </TableCell>
-
-                <TableCell align="center">
-                  <EditIcon
-                    className="actionIcon"
-                    onClick={() => {
-                      handleEditClick(transaction.id)
-                    }}
-                  />
-                </TableCell>
-                <TableCell align="center">
-                  {isLoadingItemWithId === transaction.id ? (
-                    "loading..."
-                  ) : (
-                    <DoneIcon
-                      className="actionIcon"
-                      onClick={() => {
-                        handleFinishTransaction(transaction.id)
-                      }}
-                    />
-                  )}
                 </TableCell>
               </TableRow>
             ))
