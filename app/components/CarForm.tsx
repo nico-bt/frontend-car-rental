@@ -29,6 +29,7 @@ export default function CarForm({ car, mode }: { car?: CarType; mode: "edit" | "
   const [ac, setAc] = useState(mode === "edit" ? car?.ac : true)
   const [pasajeros, setPasajeros] = useState(mode === "edit" ? car?.pasajeros : 5)
   const [cambios, setCambios] = useState(mode === "edit" ? car?.cambios : "MANUAL")
+  const [price, setPrice] = useState(mode === "edit" ? car?.price : 20)
 
   const router = useRouter()
 
@@ -41,7 +42,7 @@ export default function CarForm({ car, mode }: { car?: CarType; mode: "edit" | "
         `${process.env.NEXT_PUBLIC_BASE_URL_API}/car/${mode === "edit" ? car?.id : ""}`,
         {
           method: mode === "add" ? "POST" : "PATCH",
-          body: JSON.stringify({ marca, modelo, year, km, color, ac, pasajeros, cambios }),
+          body: JSON.stringify({ marca, modelo, year, km, color, ac, pasajeros, cambios, price }),
           headers: { "Content-Type": "application/json" },
         }
       )
@@ -89,33 +90,57 @@ export default function CarForm({ car, mode }: { car?: CarType; mode: "edit" | "
         }}
         error={error?.includes("modelo")}
       />
-      <TextField
-        id="year"
-        label="Año"
-        value={year}
-        onChange={(event: ChangeEvent<HTMLInputElement>) => {
-          setYear(+event.target.value)
-        }}
-        error={error?.includes("year")}
-      />
-      <TextField
-        id="km"
-        label="Km"
-        value={km}
-        onChange={(event: ChangeEvent<HTMLInputElement>) => {
-          setKm(+event.target.value)
-        }}
-        error={error?.includes("km")}
-      />
-      <TextField
-        id="color"
-        label="Color"
-        value={color}
-        onChange={(event: ChangeEvent<HTMLInputElement>) => {
-          setColor(event.target.value)
-        }}
-        error={error?.includes("color")}
-      />
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <TextField
+            id="year"
+            label="Año"
+            value={year}
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              setYear(+event.target.value)
+            }}
+            error={error?.includes("year")}
+          />
+        </Grid>
+
+        <Grid item xs={6}>
+          <TextField
+            id="km"
+            label="Km"
+            value={km}
+            type="number"
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              setKm(+event.target.value)
+            }}
+            error={error?.includes("km")}
+          />
+        </Grid>
+
+        <Grid item xs={6}>
+          <TextField
+            id="color"
+            label="Color"
+            value={color}
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              setColor(event.target.value)
+            }}
+            error={error?.includes("color")}
+          />
+        </Grid>
+
+        <Grid item xs={6}>
+          <TextField
+            id="price"
+            label="Precio por dia"
+            value={price}
+            type="number"
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              setPrice(+event.target.value)
+            }}
+            error={error?.includes("color")}
+          />
+        </Grid>
+      </Grid>
 
       <Grid container spacing={2}>
         <Grid item xs={4}>
