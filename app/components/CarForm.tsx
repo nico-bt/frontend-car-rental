@@ -175,7 +175,7 @@ export default function CarForm({ car, mode }: { car?: CarType; mode: "edit" | "
         </Grid>
 
         <Grid item xs={4}>
-          <FormControl>
+          <FormControl sx={{ width: "100%" }}>
             <InputLabel id="cambios-label">Cambios</InputLabel>
             <Select
               id="cambios"
