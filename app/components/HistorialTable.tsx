@@ -8,6 +8,8 @@ import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import Paper from "@mui/material/Paper"
 import { TransactionType } from "../transactions/page"
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline"
+import PendingOutlinedIcon from "@mui/icons-material/PendingOutlined"
 
 const rowHead = [
   "marca",
@@ -17,6 +19,7 @@ const rowHead = [
   "precio/dia",
   "fecha inicio",
   "fecha fin",
+  "estado",
 ]
 
 export default function HistorialTable({ transactions }: { transactions: TransactionType[] }) {
@@ -26,7 +29,9 @@ export default function HistorialTable({ transactions }: { transactions: Transac
         <TableHead>
           <TableRow sx={{ backgroundColor: "lightgoldenrodyellow", fontVariantCaps: "small-caps" }}>
             {rowHead.map((item) => (
-              <TableCell key={item}>{item}</TableCell>
+              <TableCell align="center" key={item}>
+                {item}
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>
@@ -39,19 +44,25 @@ export default function HistorialTable({ transactions }: { transactions: Transac
             </TableRow>
           ) : (
             transactions.map((transaction) => (
-              <TableRow key={transaction.id}>
-                <TableCell>{transaction.car.marca}</TableCell>
-                <TableCell>{transaction.car.modelo}</TableCell>
-                <TableCell>
+              <TableRow
+                key={transaction.id}
+                style={transaction.is_active ? {} : { backgroundColor: "#f2f8f2" }}
+              >
+                <TableCell align="center">{transaction.car.marca}</TableCell>
+                <TableCell align="center">{transaction.car.modelo}</TableCell>
+                <TableCell align="center">
                   {transaction.client.nombre + " " + transaction.client.apellido}
                 </TableCell>
-                <TableCell>{transaction.client.nro_documento}</TableCell>
+                <TableCell align="center">{transaction.client.nro_documento}</TableCell>
                 <TableCell align="center">{transaction.car.price}</TableCell>
-                <TableCell>
+                <TableCell align="center">
                   {new Date(transaction.start_date).toLocaleDateString("en-GB")}
                 </TableCell>
-                <TableCell>
+                <TableCell align="center">
                   {new Date(transaction.finish_date).toLocaleDateString("en-GB")}
+                </TableCell>
+                <TableCell align="center">
+                  {transaction.is_active ? <PendingOutlinedIcon /> : <CheckCircleOutlineIcon />}
                 </TableCell>
               </TableRow>
             ))
