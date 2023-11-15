@@ -71,7 +71,7 @@ export default function ClientsTable({ clients }: { clients: ClientType[] }) {
       })
       if (response.ok) {
         setIsLoadingItemWithId(null)
-        router.refresh()
+        setClientsState((prevState) => prevState.filter((client) => client.id !== id))
       } else {
         throw new Error()
       }
