@@ -33,6 +33,29 @@ export default function ClientsTable({ clients }: { clients: ClientType[] }) {
   const [isLoadingItemWithId, setIsLoadingItemWithId] = useState<number | null>(null)
   const router = useRouter()
 
+  const [clientsState, setClientsState] = useState(clients)
+  const [sortedDirection, setSortedDirection] = useState<"asc" | "desc" | "">("")
+
+  const sortByColumn = (columnName: string) => {
+    if (columnName === "alquilando")
+      setClientsState((prevState) => {
+        if (prevState[0].is_renting) {
+          return [...prevState].sort((a, b) => +a.is_renting - +b.is_renting)
+        } else {
+          return [...prevState].sort((a, b) => +b.is_renting - +a.is_renting)
+        }
+      })
+    if (columnName === "apellido") {
+      if (sortedDirection === "asc" || sortedDirection === "") {
+        setClientsState((prev) => [...prev.sort((a, b) => a.apellido.localeCompare(b.apellido))])
+        setSortedDirection("desc")
+      } else {
+        setClientsState((prev) => [...prev.sort((a, b) => b.apellido.localeCompare(a.apellido))])
+        setSortedDirection("asc")
+      }
+    }
+  }
+
   const handleEditClick = (id: number) => {
     router.push("/edit-client/" + id)
   }
@@ -62,21 +85,32 @@ export default function ClientsTable({ clients }: { clients: ClientType[] }) {
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="caption table">
         <TableHead>
-          <TableRow sx={{ backgroundColor: "lightgoldenrodyellow", fontVariantCaps: "small-caps" }}>
+          <TableRow
+            sx={{
+              backgroundColor: "lightgoldenrodyellow",
+              fontVariantCaps: "small-caps",
+              verticalAlign: "top",
+            }}
+          >
             {rowHead.map((item) => (
-              <TableCell key={item}>{item}</TableCell>
+              <TableCell key={item} onClick={() => sortByColumn(item)} sx={{ paddingBottom: 0 }}>
+                {item}
+                {item === "apellido" || item === "alquilando" ? (
+                  <span className="sortByColumn">click to sort</span>
+                ) : null}
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {clients.length === 0 ? (
+          {clientsState.length === 0 ? (
             <TableRow>
               <TableCell align="center" colSpan={10} sx={{ fontSize: "20px" }}>
                 No Clients Added
               </TableCell>
             </TableRow>
           ) : (
-            clients.map((client) => (
+            clientsState.map((client) => (
               <TableRow
                 key={client.id}
                 style={client.is_renting ? { backgroundColor: "lightgray" } : {}}
