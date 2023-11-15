@@ -61,16 +61,19 @@ describe("Add-car", () => {
       pasajeros: 4,
       ac: true,
       cambios: "MANUAL",
+      price: 42,
     }
     // Enter data
     cy.get('input[id="marca"]').type(formData.marca)
     cy.get('input[id="modelo"]').type(formData.modelo)
     cy.get('input[id="year"]').clear().type(formData.year.toString())
-    cy.get('input[id="km"]').clear().type(formData.km.toString())
+    cy.get('input[id="km"]').clear().click().type(formData.km.toString())
     cy.get('input[id="color"]').type(formData.color)
+    cy.get('input[id="price"]').clear().click().type(formData.price.toString())
     cy.get('input[id="pasajeros"]').clear().click().type(formData.pasajeros.toString())
 
     cy.intercept("POST", "*", (req) => {
+      console.log(req.body)
       expect(req.body).to.deep.equal(formData)
       req.reply(formData)
     }).as("postRequest")
