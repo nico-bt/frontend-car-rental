@@ -193,6 +193,7 @@ export default function ClientForm({
       </Grid>
 
       <DatePickerValue
+        data-testid="fecha"
         label="Fecha Nacimiento"
         setFecha={setFechaNacimiento}
         fecha={fechaNacimiento}

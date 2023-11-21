@@ -140,7 +140,13 @@ export default function TransactionForm({
         </Select>
       </FormControl>
 
-      <DatePickerValue disablePast label="Fecha Inicio" setFecha={setStartDate} fecha={startDate} />
+      <DatePickerValue
+        data-testid="fechaInicio"
+        disablePast
+        label="Fecha Inicio"
+        setFecha={setStartDate}
+        fecha={startDate}
+      />
       <DatePickerValue disablePast label="Fecha Fin" setFecha={setFinishDate} fecha={finishtDate} />
 
       <Button
