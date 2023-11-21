@@ -18,6 +18,10 @@ export interface CarType {
 
 export const fetchCars = async (url: string): Promise<CarType[]> => {
   const res = await fetch(url, { next: { revalidate: 0 } })
+  if (!res.ok) {
+    throw new Error("Failed to fetch data")
+  }
+
   const cars = await res.json()
 
   return cars
