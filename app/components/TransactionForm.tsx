@@ -5,9 +5,8 @@ import Box from "@mui/material/Box"
 import { Alert, Button, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material"
 import DatePickerValue from "./DatePcker"
 import dayjs, { Dayjs } from "dayjs"
-import { ClientType } from "../clients/page"
-import { CarType } from "../page"
-import { TransactionType } from "../transactions/page"
+import { ClientType, CarType, api, TransactionBody } from "@/api/car-rental-api"
+import { TransactionType } from "@/api/car-rental-api"
 
 export default function TransactionForm({
   cars,
@@ -52,21 +51,15 @@ export default function TransactionForm({
       clientId: clientToRent,
       start_date: startDate?.toISOString(),
       finish_date: finishtDate?.toISOString(),
-    }
+    } as TransactionBody
 
     setIsLoading(true)
     setError(null)
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL_API}/transactions/${
-          mode === "edit" ? transaction?.id : ""
-        }`,
-        {
-          method: mode === "add" ? "POST" : "PUT",
-          body: JSON.stringify(newTransaction),
-          headers: { "Content-Type": "application/json" },
-        }
-      )
+      const response = await (mode === "add"
+        ? api.addTransaction(newTransaction)
+        : api.editTransaction(transaction!.id, newTransaction))
+
       if (response.ok) {
         setError(null)
         router.push("/transactions")

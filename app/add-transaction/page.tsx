@@ -1,10 +1,9 @@
-import { fetchClients } from "../clients/page"
+import { api } from "@/api/car-rental-api"
 import TransactionForm from "../components/TransactionForm"
-import { fetchCars } from "../page"
 
 async function AddTransactionPage() {
-  const cars = await fetchCars(`${process.env.NEXT_PUBLIC_BASE_URL_API}/car/`)
-  const clients = await fetchClients(`${process.env.NEXT_PUBLIC_BASE_URL_API}/clients/`)
+  const cars = await api.fetchCars()
+  const clients = await api.fetchClients()
 
   return (
     <TransactionForm

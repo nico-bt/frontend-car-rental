@@ -1,7 +1,6 @@
 import TransactionForm from "@/app/components/TransactionForm"
 import { mockCars, mockClients } from "../mockData"
-import { CarType } from "@/app/page"
-import { ClientType } from "@/app/clients/page"
+import { CarType, ClientType } from "@/api/car-rental-api"
 
 async function AddTransactionPage() {
   return (

@@ -12,7 +12,7 @@ import DeleteIcon from "@mui/icons-material/Delete"
 import CarRentalIcon from "@mui/icons-material/CarRental"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-import { ClientType } from "../clients/page"
+import { ClientType, api } from "@/api/car-rental-api"
 
 const rowHead = [
   "alquilando",
@@ -63,12 +63,7 @@ export default function ClientsTable({ clients }: { clients: ClientType[] }) {
   const handleDeleteClick = async (id: number) => {
     setIsLoadingItemWithId(id)
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL_API}/clients/` + id, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+      const response = await api.deleteClient(id)
       if (response.ok) {
         setIsLoadingItemWithId(null)
         setClientsState((prevState) => prevState.filter((client) => client.id !== id))

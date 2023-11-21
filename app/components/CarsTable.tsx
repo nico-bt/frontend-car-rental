@@ -7,7 +7,7 @@ import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import Paper from "@mui/material/Paper"
-import { CarType } from "../page"
+import { CarType, api } from "@/api/car-rental-api"
 import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
 import { useRouter } from "next/navigation"
@@ -39,12 +39,8 @@ export default function CarsTable({ cars }: { cars: CarType[] }) {
   const handleDeleteClick = async (id: number) => {
     setIsLoadingItemWithId(id)
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL_API}/car/` + id, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+      const response = await api.deleteCar(id)
+
       if (response.ok) {
         setIsLoadingItemWithId(null)
         router.refresh()

@@ -11,7 +11,7 @@ import DoneIcon from "@mui/icons-material/Done"
 import EditIcon from "@mui/icons-material/Edit"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-import { TransactionType } from "../transactions/page"
+import { TransactionType, api } from "@/api/car-rental-api"
 
 const rowHead = [
   "marca",
@@ -36,12 +36,7 @@ export default function TransactionsTable({ transactions }: { transactions: Tran
   const handleFinishTransaction = async (id: number) => {
     setIsLoadingItemWithId(id)
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL_API}/transactions/` + id, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+      const response = await api.finishTransaction(id)
       if (response.ok) {
         setIsLoadingItemWithId(null)
         router.refresh()

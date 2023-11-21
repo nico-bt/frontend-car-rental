@@ -1,6 +1,6 @@
 import CarsTable from "@/app/components/CarsTable"
 import { mockCars } from "../mockData"
-import { CarType } from "@/app/page"
+import { CarType } from "@/api/car-rental-api"
 
 export default async function HomeMockPageForTesting() {
   return <CarsTable cars={mockCars as CarType[]} />

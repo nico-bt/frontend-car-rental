@@ -15,7 +15,7 @@ import {
 } from "@mui/material"
 import DatePickerValue from "./DatePcker"
 import dayjs, { Dayjs } from "dayjs"
-import { ClientType, Documentotype } from "../clients/page"
+import { ClientBody, ClientType, Documentotype, api } from "@/api/car-rental-api"
 
 export default function ClientForm({
   client,
@@ -55,19 +55,15 @@ export default function ClientForm({
       telefono,
       email,
       fecha_nacimiento: fechaNacimiento?.toISOString(),
-    }
+    } as ClientBody
 
     setIsLoading(true)
     setError(null)
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL_API}/clients/${mode === "edit" ? client?.id : ""}`,
-        {
-          method: mode === "add" ? "POST" : "PATCH",
-          body: JSON.stringify(newClient),
-          headers: { "Content-Type": "application/json" },
-        }
-      )
+      const response = await (mode === "add"
+        ? api.addClient(newClient)
+        : api.editClient(client!.id, newClient))
+
       if (response.ok) {
         setError(null)
         router.push("/clients")

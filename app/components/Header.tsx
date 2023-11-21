@@ -2,7 +2,6 @@
 
 import { usePathname } from "next/navigation"
 import Link from "next/link"
-import { Grid } from "@mui/material"
 import SeparatorBar from "./SeparatorBar"
 
 function Header() {

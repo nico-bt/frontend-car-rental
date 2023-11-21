@@ -3,7 +3,7 @@ import { ChangeEvent, FormEvent, useState } from "react"
 import { useRouter } from "next/navigation"
 import Box from "@mui/material/Box"
 import TextField from "@mui/material/TextField"
-import { CarType } from "../page"
+import { CarBody, CarType, api } from "@/api/car-rental-api"
 import {
   Alert,
   Button,
@@ -38,19 +38,26 @@ export default function CarForm({ car, mode }: { car?: CarType; mode: "edit" | "
     setIsLoading(true)
     setError(null)
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL_API}/car/${mode === "edit" ? car?.id : ""}`,
-        {
-          method: mode === "add" ? "POST" : "PATCH",
-          body: JSON.stringify({ marca, modelo, year, km, color, ac, pasajeros, cambios, price }),
-          headers: { "Content-Type": "application/json" },
-        }
-      )
+      const body = {
+        marca,
+        modelo,
+        year,
+        km,
+        color,
+        ac,
+        pasajeros,
+        cambios,
+        price,
+      } as CarBody
+
+      const response = await (mode === "edit" ? api.editCar(car!.id, body) : api.addCar(body))
+
       if (response.ok) {
         setError(null)
         router.refresh()
         router.push("/")
       } else {
+        console.log(response)
         const res = await response.json()
         setError(res.message[0])
       }
@@ -137,7 +144,7 @@ export default function CarForm({ car, mode }: { car?: CarType; mode: "edit" | "
             onChange={(event: ChangeEvent<HTMLInputElement>) => {
               setPrice(+event.target.value)
             }}
-            error={error?.includes("color")}
+            error={error?.includes("price")}
           />
         </Grid>
       </Grid>

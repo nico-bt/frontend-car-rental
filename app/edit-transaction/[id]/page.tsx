@@ -1,25 +1,10 @@
-import { fetchClients } from "@/app/clients/page"
 import TransactionForm from "@/app/components/TransactionForm"
-import { fetchCars } from "@/app/page"
-import { TransactionType } from "@/app/transactions/page"
-import { notFound } from "next/navigation"
-
-const fetchTransactionById = async (id: string): Promise<TransactionType> => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL_API}/transactions/${id}`, {
-    next: { revalidate: 0 },
-  })
-  if (!res.ok) {
-    notFound()
-  }
-  const transaction = await res.json()
-
-  return transaction
-}
+import { api } from "@/api/car-rental-api"
 
 async function EditTransactionPage({ params }: { params: { id: string } }) {
-  const transaction = await fetchTransactionById(params.id)
-  const cars = await fetchCars(`${process.env.NEXT_PUBLIC_BASE_URL_API}/car/`)
-  const clients = await fetchClients(`${process.env.NEXT_PUBLIC_BASE_URL_API}/clients/`)
+  const transaction = await api.fetchTransactionById(params.id)
+  const cars = await api.fetchCars()
+  const clients = await api.fetchClients()
 
   return (
     <TransactionForm
