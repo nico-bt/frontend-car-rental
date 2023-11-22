@@ -31,7 +31,10 @@ const rowHead = [
 
 export default function ClientsTable({ clients }: { clients: ClientType[] }) {
   const [isLoadingItemWithId, setIsLoadingItemWithId] = useState<number | null>(null)
-  const router = useRouter()
+
+  // Added a custom useRouter property in the component (defined at the end of this file)
+  // to mock it during testing with cypress forr component testing
+  const router = ClientsTable.useRouter()
 
   const [clientsState, setClientsState] = useState(clients)
   const [sortedDirection, setSortedDirection] = useState<"asc" | "desc" | "">("")
@@ -152,3 +155,5 @@ export default function ClientsTable({ clients }: { clients: ClientType[] }) {
     </TableContainer>
   )
 }
+
+ClientsTable.useRouter = useRouter

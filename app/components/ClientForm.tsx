@@ -41,7 +41,9 @@ export default function ClientForm({
     mode === "edit" ? dayjs(client?.fecha_nacimiento) : dayjs("2000-04-17")
   )
 
-  const router = useRouter()
+  // Added a custom useRouter property in the component (defined at the end of this file)
+  // to mock it during testing with cypress forr component testing
+  const router = ClientForm.useRouter()
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -215,3 +217,5 @@ export default function ClientForm({
     </Box>
   )
 }
+
+ClientForm.useRouter = useRouter

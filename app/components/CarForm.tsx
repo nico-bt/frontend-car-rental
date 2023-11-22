@@ -31,7 +31,9 @@ export default function CarForm({ car, mode }: { car?: CarType; mode: "edit" | "
   const [cambios, setCambios] = useState(mode === "edit" ? car?.cambios : "MANUAL")
   const [price, setPrice] = useState(mode === "edit" ? car?.price : 20)
 
-  const router = useRouter()
+  // Added a custom useRouter property in the component (defined at the end of this file)
+  // to mock it during testing with cypress forr component testing
+  const router = CarForm.useRouter()
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -215,3 +217,7 @@ export default function CarForm({ car, mode }: { car?: CarType; mode: "edit" | "
     </Box>
   )
 }
+
+// In production, we simply use 'useRouter'
+// During testing, we retrieve this property to facilitate the mocking of 'useRouter'.
+CarForm.useRouter = useRouter

@@ -48,7 +48,6 @@ describe("Add-client", () => {
     cy.get('input[value="17/04/2000"]').click().type(newClientData.fecha_nacimiento)
 
     cy.intercept("POST", "*", (req) => {
-      console.log(req.body)
       const dataWithDateTransfomed = {
         ...newClientData,
         fecha_nacimiento: "1980-06-12T03:00:00.000Z",

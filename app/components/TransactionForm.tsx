@@ -38,7 +38,9 @@ export default function TransactionForm({
   const daysOfRent = finishtDate?.diff(startDate, "day")
   const priceSelectedCar = cars.find((car) => car.id === carToRent)?.price
 
-  const router = useRouter()
+  // Added a custom useRouter property in the component (defined at the end of this file)
+  // to mock it during testing with cypress forr component testing
+  const router = TransactionForm.useRouter()
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -135,12 +137,17 @@ export default function TransactionForm({
 
       <DatePickerValue
         data-testid="fechaInicio"
-        disablePast
+        disablePast={mode === "add" ? true : false}
         label="Fecha Inicio"
         setFecha={setStartDate}
         fecha={startDate}
       />
-      <DatePickerValue disablePast label="Fecha Fin" setFecha={setFinishDate} fecha={finishtDate} />
+      <DatePickerValue
+        disablePast={mode === "add" ? true : false}
+        label="Fecha Fin"
+        setFecha={setFinishDate}
+        fecha={finishtDate}
+      />
 
       <Button
         type="submit"
@@ -170,3 +177,5 @@ export default function TransactionForm({
     </Box>
   )
 }
+
+TransactionForm.useRouter = useRouter

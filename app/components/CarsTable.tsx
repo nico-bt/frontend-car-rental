@@ -30,7 +30,10 @@ const rowHead = [
 
 export default function CarsTable({ cars }: { cars: CarType[] }) {
   const [isLoadingItemWithId, setIsLoadingItemWithId] = useState<number | null>(null)
-  const router = useRouter()
+
+  // Added a custom useRouter property in the component (defined at the end of this file)
+  // to mock it during testing with cypress forr component testing
+  const router = CarsTable.useRouter()
 
   const handleEditClick = (id: number) => {
     router.push("/edit-car/" + id)
@@ -113,3 +116,7 @@ export default function CarsTable({ cars }: { cars: CarType[] }) {
     </TableContainer>
   )
 }
+
+// In production, we simply use 'useRouter'
+// During testing, we retrieve this property to facilitate the mocking of 'useRouter'.
+CarsTable.useRouter = useRouter

@@ -27,7 +27,10 @@ const rowHead = [
 
 export default function TransactionsTable({ transactions }: { transactions: TransactionType[] }) {
   const [isLoadingItemWithId, setIsLoadingItemWithId] = useState<number | null>(null)
-  const router = useRouter()
+
+  // Added a custom useRouter property in the component (defined at the end of this file)
+  // to mock it during testing with cypress forr component testing
+  const router = TransactionsTable.useRouter()
 
   const handleEditClick = (id: number) => {
     router.push("/edit-transaction/" + id)
@@ -111,3 +114,5 @@ export default function TransactionsTable({ transactions }: { transactions: Tran
     </TableContainer>
   )
 }
+
+TransactionsTable.useRouter = useRouter

@@ -8,7 +8,6 @@ describe("Add-client", () => {
     cy.get('div[id="client"]').should("exist")
     cy.contains("Fecha Inicio")
     cy.contains("Fecha Fin")
-    // cy.get('input[value="17/04/2000"]').should("exist")
 
     cy.contains(/add/i)
     cy.get('button[type="submit"]').should("exist")

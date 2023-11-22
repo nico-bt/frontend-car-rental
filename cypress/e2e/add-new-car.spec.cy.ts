@@ -43,7 +43,6 @@ describe("Add-car", () => {
     cy.get('input[id="pasajeros"]').clear().click().type(formData.pasajeros.toString())
 
     cy.intercept("POST", "*", (req) => {
-      console.log(req.body)
       expect(req.body).to.deep.equal(formData)
       req.reply(formData)
     }).as("postRequest")

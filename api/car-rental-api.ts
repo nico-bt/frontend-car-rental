@@ -51,6 +51,8 @@ export interface TransactionType {
   is_active: boolean
   client: ClientType
   car: CarType
+  created_at: string
+  updated_at: string
 }
 
 export interface CarBody {
