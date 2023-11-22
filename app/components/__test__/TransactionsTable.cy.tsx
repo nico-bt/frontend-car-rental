@@ -72,3 +72,14 @@ describe("TransactionsTable Component", () => {
     cy.get("@useRouterStub").should("have.been.called")
   })
 })
+
+describe("TransactionsTable with no transactions", () => {
+  it("empty list: should return a message when there are no transactions", () => {
+    cy.stub(TransactionsTable, "useRouter")
+      .as("useRouterStub")
+      .returns({ pathname: "/", push: () => null, refresh: () => null })
+    cy.mount(<TransactionsTable transactions={[]} />)
+
+    cy.contains(/No transactions active/i)
+  })
+})

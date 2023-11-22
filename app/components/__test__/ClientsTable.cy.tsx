@@ -61,3 +61,14 @@ describe("ClientsTable Component", () => {
     cy.get("@useRouterStub").should("have.been.called")
   })
 })
+
+describe("ClientsTable with no clients", () => {
+  it("empty list: should return a message when there are no clients", () => {
+    cy.stub(ClientsTable, "useRouter")
+      .as("useRouterStub")
+      .returns({ pathname: "/", push: () => null, refresh: () => null })
+    cy.mount(<ClientsTable clients={[]} />)
+
+    cy.contains(/No clients added/i)
+  })
+})

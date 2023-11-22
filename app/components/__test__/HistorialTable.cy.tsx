@@ -45,3 +45,11 @@ describe("Historial Table Component", () => {
       .should("have.css", "background-color", "rgb(242, 248, 242)")
   })
 })
+
+describe("HistorialTable with no transactions", () => {
+  it("empty list: should return a message when there are no transactions", () => {
+    cy.mount(<HistorialTable transactions={[]} />)
+
+    cy.contains(/No transactions active/i)
+  })
+})

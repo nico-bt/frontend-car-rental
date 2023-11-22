@@ -65,3 +65,14 @@ describe("CarsTable Component", () => {
     cy.get("@useRouterStub").should("have.been.called")
   })
 })
+
+describe("CarsTable with no cars", () => {
+  it("empty list: should return a message when there are no cars", () => {
+    cy.stub(CarsTable, "useRouter")
+      .as("useRouterStub")
+      .returns({ pathname: "/", push: () => null, refresh: () => null })
+    cy.mount(<CarsTable cars={[]} />)
+
+    cy.contains(/No cars added/i)
+  })
+})
