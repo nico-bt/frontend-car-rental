@@ -72,7 +72,7 @@ export default function ClientForm({
         router.refresh()
       } else {
         const res = await response.json()
-        setError(res.message[0])
+        setError(Array.isArray(res.message) ? res.message[0] : res.message)
       }
     } catch (err) {
       setError(err)
