@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation"
 
-const BASE_URL = "https://car-rental-api.adaptable.app/api"
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL_API || "http://localhost:3030/api"
 
 export interface CarType {
   id: number
