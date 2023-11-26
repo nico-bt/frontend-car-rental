@@ -1,4 +1,4 @@
-## frontend-car-rental
+## Frontend Car Rental
 Frontend for the car rental API: https://github.com/nico-bt/backend-car-rental-API/blob/development/README.md
 
 ## Techs used
