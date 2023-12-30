@@ -1,5 +1,4 @@
-## Frontend Car Rental
-Frontend for the car rental API: https://github.com/nico-bt/backend-car-rental-API/blob/development/README.md
+# Frontend Car Rental
 
 ## Techs used
 - Next.js
@@ -9,6 +8,9 @@ Frontend for the car rental API: https://github.com/nico-bt/backend-car-rental-A
 - API: https://car-rental-api.adaptable.app/api/clients
 
 (Obs: The free tier goes to sleep after a while, and the first load may take a few seconds.)
+
+## API
+Car rental API: https://github.com/nico-bt/backend-car-rental-API/blob/development/README.md
 
 ## Running locally
 You need to have installed Docker, to run a local postgres database
