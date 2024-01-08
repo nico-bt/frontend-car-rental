@@ -1,10 +1,10 @@
 ## Frontend Car Rental
-Frontend for the car rental API: https://github.com/nico-bt/backend-car-rental-API/blob/development/README.md
+Frontend for the [car rental API](https://github.com/nico-bt/backend-car-rental-API/tree/main)
 
 ## Techs used
 - Next.js
 
-## Live deploys to see UI and interaction:
+## Live deploys:
 - Frontend: https://frontend-car-rental-ivory.vercel.app/
 - API: https://car-rental-api.adaptable.app/api/clients
 
