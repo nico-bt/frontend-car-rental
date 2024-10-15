@@ -5,8 +5,8 @@ Frontend for the [car rental API](https://github.com/nico-bt/backend-car-rental-
 - Next.js
 
 ## Live deploys:
-- Frontend: https://frontend-car-rental-ivory.vercel.app/
-- API: https://car-rental-api.adaptable.app/api/clients
+- Frontend: https://car-rental-xi-bay.vercel.app/
+- API: https://bewildered-rozamond-nico-bat-4a2e4923.koyeb.app/api/clients
 
 (Obs: The free tier goes to sleep after a while, and the first load may take a few seconds.)
 
