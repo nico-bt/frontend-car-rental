@@ -88,14 +88,19 @@ export interface TransactionBody {
 
 export const api = {
   fetchCars: async (): Promise<CarType[]> => {
-    const res = await fetch(BASE_URL + "/car", { next: { revalidate: 0 } })
-    if (!res.ok) {
+    try {
+      const res = await fetch(BASE_URL + "/car", { next: { revalidate: 0 } })
+      if (!res.ok) {
+        throw new Error("Failed to fetch data")
+      }
+
+      const cars = await res.json()
+
+      return cars
+    } catch (error) {
+      console.error(error)
       throw new Error("Failed to fetch data")
     }
-
-    const cars = await res.json()
-
-    return cars
   },
   fetchClients: async (): Promise<ClientType[]> => {
     const res = await fetch(BASE_URL + "/clients", { next: { revalidate: 0 } })
